@@ -8,10 +8,13 @@
     body{
       
     }
-	div{ 
+	div, p{ 
 			margin:5px;
 			padding:15px 20px;
 			border-radius:15px;
+	}
+	p:hover{
+		opacity:0.6;
 	}
 
 
@@ -24,7 +27,7 @@
 	<textarea form ="testformid" name="taname" id="topTextarea" cols="35" wrap="soft" style="border-radius:5px"></textarea>
 	
 	<input type="button" value="new" style="border-radius:50px" onClick="newNote()">
-	<input type="button" value="edit" style="border-radius:50px" onClick="editNote()">
+	<input type="button" value="update" style="border-radius:50px" onClick="editNote()">
 	<input type="button" value="delete" style="border-radius:50px" onClick="deleteNote()">
 
 	<div id="noteList" class="big_block" background-color="YELLOW"><div>
@@ -33,33 +36,129 @@
 <script  type="text/javascript" src="jquery-3.1.1.js"> </script>
   
 <script>
-	var y = 0;
+	var noteNum = 0;
+		parseInt(noteNum);
 	var notes = new Array();
-	parseInt(y);
+	var clicked=new Array();
+	var temp=0;
+	
+	var editting=0
 
+	$( "p" ).each(function( index ) {
+		if($(this).css('background-color')=="rgb(0, 0, 225)"){
+			editting=1;
+		}
+		else{
+			editting=0;
+		}
+	})
 	
 	function newNote(){
+		
+		var textareaValue = document.getElementById("topTextarea").value;
+		textareaValue = textareaValue.replace(/\n/g,"</br>");
+	/*
+		if(!textareaValue){
+			console.log("EMPTY WORDS");
+			alert("EMPTY WORDS");
+		}
+		else{*/
+				console.log("New a note No."+noteNum);
+			//new a note block with value in textarea, save in array notes[] in order
+			notes[noteNum] =	$("<p>").attr('id', noteNum)
+								.attr('vlaue', noteNum)
+								.append(textareaValue)
+								.addClass('noteBlock')
+								.attr('ondblclick', editNote())
+								.css({"background-color": "GREY"})
+								.click(function isClicked(){
+									editting=0;
+									var value=$(this).val();
+									
+									clicked[$(this).value]++;	
+									//choees & cancel
+									
+									if($(this).css('background-color')!="rgb(128, 128, 128)"){
+										$(this).css({"background-color": "GREY"});
+										}
+									else{
+										$(this).css({"background-color": "yellow"});
+								}})	
+								.dblclick(function editNote(){
+									//var pValue=$( this ).text();
+									//console.log(pValue);
+									if(!editting){
+									
+										var editTextarea=$(this).text();
+																													
+										editTextarea = editTextarea.replace("</br>", /\n/g);
+										
+										//editTextarea = editTextarea.replace(/\n/g,"</br>");
+										console.log(editTextarea);
+										console.log();
+										console.log();
+										console.log();
+										document.getElementById("topTextarea").value=editTextarea;
+										
+										$(this).css({"background-color": "rgb(0, 0, 225)"});
+										editting=1;
+									}
+								})						
+								.appendTo("#noteList");		
+								
+			
+							//.append("<div>"+textareaValue+"</div>")
+							//.attr('id', id=('note'+noteNum);
+			//class='block' value='hi' style='background-color:GREY' ondblclick='editNote()' onClick='click()'				
+			
+					
+							
+			noteNum++;
+			//clear textarea
+			document.getElementById("topTextarea").value="";
+			//set not chosen
+			clicked[noteNum]=0;
+			//console.log("temp="+temp);
+			
+			$('.noteBlock').click(function(event) {
+				var blockID = $(this).attr('id');
+				//console.log("i GOT ID="+blockID);
+				clicked[blockID]=1;
+			});
+		//}
+		
 	
-	var textareaValue = document.getElementById("topTextarea").value;
-	textareaValue = textareaValue.replace(/\n/g,"<br>");
-	console.log("Note No."+y);
-	//new a note block with value in textarea, save in array notes[] in order
-	notes[y] = $("#noteList")
-					.css({height:200,width:300, margin:5})
-					.append("<div class='block' style='background-color:GREY' ondblclick='doubleClick()'>"+textareaValue+"</div>")
-					.addClass("note"+y);
-	y++;
-	//新增完清空輸入欄位
-	document.getElementById("topTextarea").value="";
 	}
 	
 	function deleteNote(){
+		$( "p" ).each(function( index ) {
+			//console.log($(this).css('background-color'));
+			if($(this).css('background-color')!="rgb(128, 128, 128)"){
+				//console.log( "DELETE "+index  );
+				$(this).remove();
+				}
+			else{
+				//console.log("NOOOOOOOO"+index );
+			}	
+			});
+	//clear textarea
+	document.getElementById("topTextarea").value="";		
 	}
 	
 	function editNote(){
-	}
-	function doubleClick(){
-		console.log("This is "+y);
+		$( "p" ).each(function( index ) {
+			//console.log($(this).css('background-color'));
+			if($(this).css('background-color')=="rgb(0, 0, 225)"){
+					var textareaValue = document.getElementById("topTextarea").value;
+					textareaValue = textareaValue.replace(/\n/g,"</br>");
+					$(this).empty()
+							.append(textareaValue)	
+							.css({"background-color": "GREY"});
+			}
+			});
+	//clear textarea
+	document.getElementById("topTextarea").value="";	
+	editting=0;
 	}
 </script>
 

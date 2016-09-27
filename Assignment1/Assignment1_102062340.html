@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    body{
+      
+    }
+	div{ 
+			margin:5px;
+			padding:15px 20px;
+			border-radius:15px;
+	}
+
+
+  </style>
+</head>
+<body>
+	<img src="http://www.san-x.co.jp/blog/sumikko/img/header.png">
+	<img src="http://www.san-x.co.jp/blog/sumikko/img/s_new.png" style="width:200px"><br>
+	  
+	<textarea form ="testformid" name="taname" id="topTextarea" cols="35" wrap="soft" style="border-radius:5px"></textarea>
+	
+	<input type="button" value="new" style="border-radius:50px" onClick="newNote()">
+	<input type="button" value="edit" style="border-radius:50px" onClick="editNote()">
+	<input type="button" value="delete" style="border-radius:50px" onClick="deleteNote()">
+
+	<div id="noteList" class="big_block" background-color="YELLOW"><div>
+	
+</body>
+<script  type="text/javascript" src="jquery-3.1.1.js"> </script>
+  
+<script>
+	var y = 0;
+	var notes = new Array();
+	parseInt(y);
+
+	
+	function newNote(){
+	
+	var textareaValue = document.getElementById("topTextarea").value;
+	textareaValue = textareaValue.replace(/\n/g,"<br>");
+	console.log("Note No."+y);
+	//new a note block with value in textarea, save in array notes[] in order
+	notes[y] = $("#noteList")
+					.css({height:200,width:300, margin:5})
+					.append("<div class='block' style='background-color:GREY' ondblclick='doubleClick()'>"+textareaValue+"</div>")
+					.addClass("note"+y);
+	y++;
+	//新增完清空輸入欄位
+	document.getElementById("topTextarea").value="";
+	}
+	
+	function deleteNote(){
+	}
+	
+	function editNote(){
+	}
+	function doubleClick(){
+		console.log("This is "+y);
+	}
+</script>
+
+</html>

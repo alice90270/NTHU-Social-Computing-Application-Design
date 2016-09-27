@@ -6,31 +6,52 @@
   <title>JS Bin</title>
   <style>
     body{
-      
+			background-color:rgb(248, 237, 217);
     }
-	div, p{ 
-			margin:5px;
+	textarea{
+		margin:5px;
+		position: relative;
+		left:0px;
+		width: 400px;
+		height: 80px;
+	}
+	button{
+	
+			margin:10px 200px;
+			
+}
+	
+	table,p{ 
+			margin:5px 20px;
 			padding:15px 20px;
 			border-radius:15px;
 	}
 	p:hover{
 		opacity:0.6;
 	}
-
-
   </style>
 </head>
 <body>
-	<img src="http://www.san-x.co.jp/blog/sumikko/img/header.png">
-	<img src="http://www.san-x.co.jp/blog/sumikko/img/s_new.png" style="width:200px"><br>
-	  
-	<textarea form ="testformid" name="taname" id="topTextarea" cols="35" wrap="soft" style="border-radius:5px"></textarea>
-	
-	<input type="button" value="new" style="border-radius:50px" onClick="newNote()">
-	<input type="button" value="update" style="border-radius:50px" onClick="editNote()">
-	<input type="button" value="delete" style="border-radius:50px" onClick="deleteNote()">
 
-	<div id="noteList" class="big_block" background-color="YELLOW"><div>
+	<img src="http://www.san-x.co.jp/blog/sumikko/img/header.png"><br>
+	<img src="http://www.san-x.co.jp/blog/sumikko/img/s_new.png" style="width:200px"><br>
+<table style="width:100%">
+  <tr>
+    <td><div>
+	<input type="button" value="new" style="border-radius:50px" onClick="newNote()"><br>
+	<input type="button" value="update" style="border-radius:50px" onClick="editNote()"><br>
+	<input type="button" value="delete" style="border-radius:50px" onClick="deleteNote()"><br>
+	<div></td>
+  
+    <td><textarea form ="testformid" name="taname" id="topTextarea" cols="35" wrap="soft" style="border-radius:5px"></textarea>
+	</td>
+  </tr>
+  </table>
+	
+	
+	
+	
+	<div id="noteList" class="big_block" "><div>
 	
 </body>
 <script  type="text/javascript" src="jquery-3.1.1.js"> </script>
@@ -43,9 +64,8 @@
 	var temp=0;
 	
 	var editting=0
-
 	$( "p" ).each(function( index ) {
-		if($(this).css('background-color')=="rgb(0, 0, 225)"){
+		if($(this).css('background-color')=="rgb(138, 206, 207)"){
 			editting=1;
 		}
 		else{
@@ -57,12 +77,12 @@
 		
 		var textareaValue = document.getElementById("topTextarea").value;
 		textareaValue = textareaValue.replace(/\n/g,"</br>");
-	/*
+	
 		if(!textareaValue){
 			console.log("EMPTY WORDS");
 			alert("EMPTY WORDS");
 		}
-		else{*/
+		else{
 				console.log("New a note No."+noteNum);
 			//new a note block with value in textarea, save in array notes[] in order
 			notes[noteNum] =	$("<p>").attr('id', noteNum)
@@ -70,7 +90,7 @@
 								.append(textareaValue)
 								.addClass('noteBlock')
 								.attr('ondblclick', editNote())
-								.css({"background-color": "GREY"})
+								.css({"background-color": "rgb(211, 235, 219)"})
 								.click(function isClicked(){
 									editting=0;
 									var value=$(this).val();
@@ -78,11 +98,11 @@
 									clicked[$(this).value]++;	
 									//choees & cancel
 									
-									if($(this).css('background-color')!="rgb(128, 128, 128)"){
-										$(this).css({"background-color": "GREY"});
+									if($(this).css('background-color')=="rgb(254, 236, 171)"){
+										$(this).css({"background-color": "rgb(211, 235, 219)"});
 										}
 									else{
-										$(this).css({"background-color": "yellow"});
+										$(this).css({"background-color": "rgb(254, 236, 171)"});
 								}})	
 								.dblclick(function editNote(){
 									//var pValue=$( this ).text();
@@ -100,7 +120,7 @@
 										console.log();
 										document.getElementById("topTextarea").value=editTextarea;
 										
-										$(this).css({"background-color": "rgb(0, 0, 225)"});
+										$(this).css({"background-color": "rgb(138, 206, 207)"});
 										editting=1;
 									}
 								})						
@@ -125,7 +145,7 @@
 				//console.log("i GOT ID="+blockID);
 				clicked[blockID]=1;
 			});
-		//}
+		}
 		
 	
 	}
@@ -133,7 +153,7 @@
 	function deleteNote(){
 		$( "p" ).each(function( index ) {
 			//console.log($(this).css('background-color'));
-			if($(this).css('background-color')!="rgb(128, 128, 128)"){
+			if($(this).css('background-color')=="rgb(254, 236, 171)"){
 				//console.log( "DELETE "+index  );
 				$(this).remove();
 				}
@@ -148,12 +168,12 @@
 	function editNote(){
 		$( "p" ).each(function( index ) {
 			//console.log($(this).css('background-color'));
-			if($(this).css('background-color')=="rgb(0, 0, 225)"){
+			if($(this).css('background-color')=="rgb(138, 206, 207)"){
 					var textareaValue = document.getElementById("topTextarea").value;
 					textareaValue = textareaValue.replace(/\n/g,"</br>");
 					$(this).empty()
 							.append(textareaValue)	
-							.css({"background-color": "GREY"});
+							.css({"background-color": "rgb(211, 235, 219)"});
 			}
 			});
 	//clear textarea
